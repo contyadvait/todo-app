@@ -34,6 +34,9 @@ struct ToDoDetailView: View {
                 
                 Toggle("Is done?", isOn: $todo.done)
             }
+            ColorPicker(selection: $todo.color) {
+                Label("Color", systemImage: "paintpalette.fill")
+            }
         }
     }
 }

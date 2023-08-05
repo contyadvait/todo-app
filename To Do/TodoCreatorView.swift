@@ -13,6 +13,7 @@ struct TodoCreatorView: View {
     @State var task: String = ""
     @State var description: String = ""
     @State var priority: Priority = .medium
+    @State var color: Color = .blue
     var body: some View {
         List {
             Section("Create new task") {
@@ -31,8 +32,12 @@ struct TodoCreatorView: View {
                 }
                 .pickerStyle(.menu)
                 
+                ColorPicker(selection: $color) {
+                    Label("Color", systemImage: "paintpalette.fill")
+                }
+                
                 Button {
-                    todos.append(Task(item: task, description: description, priority: priority))
+                    todos.append(Task(item: task, description: description, priority: priority, color: color))
                     dismiss()
                 } label: {
                     Label("Create new task!", systemImage: "plus")

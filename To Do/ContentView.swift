@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var todos = [Task(item: "Buy new MacBook Pro", priority: .low),
-                        Task(item: "Sell kidney", priority: .medium),
-                        Task(item: "Go for Swift accelerator program", description: "At Apple innovis 3rd floor, near one-north MRT station", priority: .urgent),
-                        Task(item: "Join SAP EXCO", description: "Sign up at tk.sg/swiftexco2023", done: true, priority: .urgent)]
+    @State var todos = [Task(item: "Buy new MacBook Pro", priority: .low, color: .green),
+                        Task(item: "Sell kidney", priority: .medium, color: .blue),
+                        Task(item: "Go for Swift accelerator program", description: "At Apple innovis 3rd floor, near one-north MRT station", priority: .urgent, color: .orange),
+                        Task(item: "Join SAP EXCO", description: "Sign up at tk.sg/swiftexco2023", done: true, priority: .urgent, color: .gray)]
     @State var openCreator = false
     var body: some View {
         NavigationStack {
@@ -22,16 +22,21 @@ struct ContentView: View {
                     } label: {
                         HStack {
                             Image(systemName: todo.done ? "checkmark.circle.fill" : "circle")
-                                .foregroundColor(todo.done ? .green : .red)
+                                .foregroundColor(todo.color)
                                 .onTapGesture {
                                     todo.done.toggle()
                                 }
                             VStack {
                                 HStack {
+                                    
+                                    Text(todo.displayedPriority)
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundColor(.red)
+                                    
                                     Text(todo.item)
                                         .multilineTextAlignment(.leading)
                                         .strikethrough(todo.done)
-                                        
+                                    
                                     Spacer()
                                 }
                                 if todo.description != "" {
@@ -64,6 +69,9 @@ struct ContentView: View {
                             .tint(.green)
                         }
                     }
+                }
+                .onDelete { indexSet in
+                    todos.remove(atOffsets: indexSet)
                 }
                 
             }
