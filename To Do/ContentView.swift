@@ -31,6 +31,7 @@ struct ContentView: View {
                                     Text(todo.item)
                                         .multilineTextAlignment(.leading)
                                         .strikethrough(todo.done)
+                                        
                                     Spacer()
                                 }
                                 if todo.description != "" {
@@ -46,7 +47,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .swipeActions(allowsFullSwipe: false) {
+                    .swipeActions(allowsFullSwipe: true) {
                         if todo.done {
                             Button {
                                 todo.done.toggle()
