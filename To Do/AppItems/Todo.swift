@@ -1,17 +1,22 @@
 import Foundation
 import SwiftUI
 
-enum Priority {
+enum Priority: Codable {
     case low, medium, high, urgent
 }
 
-struct Task: Identifiable {
+enum TaskStatus: Codable {
+    case incomplete, doing, done
+}
+
+struct Task: Identifiable, Codable {
     let id = UUID()
     
     var item: String
     var description: String = ""
-    var done: Bool = false
+    var status: TaskStatus = .incomplete
     var priority: Priority = .medium
+    var dueDate: Date
     var displayedPriority: String {
         if priority == .low {
             return "!"
@@ -27,3 +32,4 @@ struct Task: Identifiable {
     
     var color: Color = .blue
 }
+

@@ -14,6 +14,8 @@ struct TodoCreatorView: View {
     @State var description: String = ""
     @State var priority: Priority = .medium
     @State var color: Color = .blue
+    @State var goingToCancel = false
+    @State var dueDate = Date()
     var body: some View {
         List {
             Section("Create new task") {
@@ -36,19 +38,31 @@ struct TodoCreatorView: View {
                     Label("Color", systemImage: "paintpalette.fill")
                 }
                 
+                DatePicker(selection: $dueDate) {
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text("Deadline")
+                            .dynamicTypeSize(.xSmall)
+                    }
+                
+                }
+                
                 Button {
-                    todos.append(Task(item: task, description: description, priority: priority, color: color))
+                    todos.append(Task(item: task, description: description, priority: priority, dueDate: dueDate, color: color))
                     dismiss()
                 } label: {
                     Label("Create new task!", systemImage: "plus")
                 }
+                Button {
+                    goingToCancel = true
+                } label: {
+                    Label("Cancel", systemImage: "minus")
+                }
             }
+        }
+        .alert("Are you sure you want to cancel?", isPresented: $goingToCancel) {
+            Button("Yes", role: .destructive) { dismiss() }
+            Button("No", role: .cancel) {}
         }
     }
 }
-//
-//struct TodoCreatorView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TodoCreatorView()
-//    }
-//}
